@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AC Expert Global — Automotive AC Parts Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f3ee;
+    --ice: #d6eaf2;
+    --blue: #1a6fa8;
+    --blue-dark: #0d4a73;
+    --accent: #00b4d8;
+    --gray: #888;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+  }
+  .logo span { color: var(--accent); }
+
+  nav a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(26,111,168,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,180,216,0.08) 0%, transparent 60%);
+  }
+
+  /* Grid lines */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.35s forwards;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    margin-top: 32px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #aaa;
+    max-width: 420px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-sub strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .cta-row {
+    margin-top: 48px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.65s forwards;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    border-radius: 2px;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+  }
+  .btn-primary:hover {
+    background: #00cdf5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,180,216,0.35);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .wa-icon { font-size: 1.1rem; }
+
+  /* HERO RIGHT — stats */
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 120px 48px 80px;
+    position: relative;
+    z-index: 2;
+    gap: 2px;
+  }
+
+  .stat-block {
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(8px);
+    padding: 28px 36px;
+    width: 260px;
+    opacity: 0;
+    animation: fadeLeft 0.8s forwards;
+  }
+  .stat-block:nth-child(1) { animation-delay: 0.5s; margin-right: 40px; }
+  .stat-block:nth-child(2) { animation-delay: 0.65s; }
+  .stat-block:nth-child(3) { animation-delay: 0.8s; margin-right: 40px; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: #888;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    margin: 0 48px;
+  }
+
+  /* PROBLEM SECTION */
+  .section {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    letter-spacing: 0.05em;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .problem-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 40px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .problem-card:hover {
+    border-color: rgba(0,180,216,0.3);
+    background: rgba(0,180,216,0.04);
+  }
+
+  .problem-card .icon {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+  }
+
+  .problem-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .problem-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #888;
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    background: rgba(26,111,168,0.06);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 56px;
+  }
+
+  .step {
+    padding: 40px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(0,180,216,0.15);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: #888;
+  }
+
+  /* WHY US */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .why-card {
+    padding: 36px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .why-card .tag {
+    display: inline-block;
+    background: rgba(0,180,216,0.15);
+    color: var(--accent);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 16px;
+  }
+
+  .why-card h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .why-card p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #777;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,180,216,0.08) 0%, transparent 70%);
+  }
+
+  .cta-section h2 {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .cta-section p {
+    position: relative;
+    z-index: 1;
+    color: #888;
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 20px auto 40px;
+    line-height: 1.7;
+  }
+
+  .cta-section .cta-row {
+    justify-content: center;
+    opacity: 1;
+    animation: none;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo { font-size: 1.2rem; }
+
+  footer p {
+    font-size: 0.78rem;
+    color: #555;
+    letter-spacing: 0.05em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 100px 24px 40px; }
+    .hero-right { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; padding: 20px 24px 60px; gap: 8px; }
+    .stat-block { width: calc(50% - 4px); padding: 20px; margin-right: 0 !important; }
+    .stat-num { font-size: 2rem; }
+    .section { padding: 60px 24px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .why-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+    .divider { margin: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AC Expert<span> Global</span></div>
+  <a href="#contact">Contact us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-left">
+    <p class="eyebrow">Powered by AutoClima AS — Norway's leading automotive AC specialist since 2003</p>
+    <h1>The <em>Right</em><br>Part.<br>First Time.</h1>
+    <p class="hero-sub">
+      Full-range automotive AC parts sourced globally — with specialist-level expertise on A/C compressors. <strong>Free shipping. Up to 50% below dealer price. Right part, first time.</strong>
+    </p>
+    <div class="cta-row">
+      <a href="https://wa.me/4700000000" class="btn btn-primary">
+        <span class="wa-icon">💬</span> WhatsApp Us
+      </a>
+      <a href="mailto:post@autoclima.no" class="btn btn-ghost">Send Inquiry</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-block">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Years of expertise</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">2000+</div>
+      <div class="stat-label">Customers served</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">50%</div>
+      <div class="stat-label">Below dealer price</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">🌍</div>
+      <div class="stat-label">We ship worldwide</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROBLEM -->
+<section class="section">
+  <p class="section-label">The problem we solve</p>
+  <h2>Wrong Parts Cost<br>You Time & Money</h2>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="icon">❌</div>
+      <h3>Generic suppliers get it wrong</h3>
+      <p>Large distributors carry thousands of SKUs but lack the specific knowledge to identify the correct automotive AC part for your vehicle. Wrong parts arrive, work stops.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">⏱</div>
+      <h3>Downtime is expensive</h3>
+      <p>Every hour a vehicle is waiting for the right part is a cost. In a climate like Dubai's, a non-functioning AC is not a minor issue — it's urgent.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">💸</div>
+      <h3>Dealership prices are too high</h3>
+      <p>OEM dealers charge a significant premium. Most workshops overpay because they don't have access to global sourcing networks.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">🔍</div>
+      <h3>AC systems are complex</h3>
+      <p>Automotive AC is a specialized segment. Compressors, refrigerants, expansion valves — small differences in specs mean the difference between a working system and a warranty claim.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section">
+    <p class="section-label">How it works</p>
+    <h2>Simple. Fast. Specialist.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Send us the case</h3>
+        <p>Vehicle make, model, year, VIN and symptom. Via WhatsApp or email. No forms, no waiting rooms.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Your personal A/C specialist — on demand</h3>
+        <p>Most workshops source parts from large suppliers with no technical support. We work differently. Get immediate access to a specialist with 30+ years of hands-on AC experience. We diagnose the problem with you, identify the exact right part, and follow through until it's solved. No call centers. No forms. Just a specialist who picks up — and solves the problem with you. For any workshop or mechanic, that kind of direct access is rare. We make it standard.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>We source & ship</h3>
+        <p>We leverage our global supplier network to get you the correct part at the best price — delivered directly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY AUTOCLIMA -->
+<section class="section">
+  <p class="section-label">Why AutoClima</p>
+  <h2>Built for Specialists,<br>By Specialists</h2>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="tag">Expertise</div>
+      <h3>30+ years of diagnostics</h3>
+      <p>30+ years of hands-on AC diagnostics across all vehicle types. A/C compressors are our core specialty — but we source and identify every component in the system.</p>
+    </div>
+    <div class="why-card">
+      <div class="tag">Price</div>
+      <h3>Up to 50% below dealer</h3>
+      <p>Direct global sourcing and long-term supplier relationships mean you pay up to 50% below dealer price — with free shipping included. The savings go directly to you.</p>
+    </div>
+    <div class="why-card">
+      <div class="tag">Coverage</div>
+      <h3>All vehicles, all markets</h3>
+      <p>Cars, vans, trucks, buses, agricultural machinery. Japanese, European, American, Korean — any brand, any system.</p>
+    </div>
+    <div class="why-card">
+      <div class="tag">Speed</div>
+      <h3>Fast response, no bureaucracy</h3>
+      <p>You talk directly to a specialist. Not a call center, not a form. Direct answers, fast turnaround.</p>
+    </div>
+    <div class="why-card">
+      <div class="tag">Accuracy</div>
+      <h3>Right part, first time</h3>
+      <p>This is our core promise. We don't ship until we're certain. Our return rate reflects that.</p>
+    </div>
+    <div class="why-card">
+      <div class="tag">Shipping</div>
+      <h3>We ship worldwide — free</h3>
+      <p>Order from anywhere. We deliver directly to your workshop, wherever you are in the world. Free shipping, every time.</p>
+    </div>
+    <div class="why-card">
+      <div class="tag">Trust</div>
+      <h3>Backed by AutoClima AS, Norway</h3>
+      <p>AC Expert Global is powered by AutoClima AS — Norway's leading automotive AC specialist since 2003, with 2000+ customers and 20+ years of hands-on expertise.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>Ready to Get<br>The Right Part?</h2>
+  <p>Send us your next difficult case. No commitment, no cost for the first inquiry. See the difference a specialist makes.</p>
+  <div class="cta-row">
+    <a href="https://wa.me/4700000000" class="btn btn-primary">
+      <span class="wa-icon">💬</span> WhatsApp Us Now
+    </a>
+    <a href="mailto:post@autoclima.no" class="btn btn-ghost">post@autoclima.no</a>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">AC Expert<span> Global</span></div>
+  <p>Powered by AutoClima AS · Automotive AC specialist since 2003</p>
+</footer>
+
+</body>
+</html>
